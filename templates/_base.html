@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        {% load static %}{% get_static_prefix as STATIC_PREFIX %}
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css">
+
+        <title>{{ page_title|capfirst }} &smid; Marketing-Expert</title>
+
+    </head>
+
+    <body>
+
+        <main>
+
+            {% block main_content %}
+
+            {% endblock main_content %}
+
+		</main>
+
+        <script type="text/javascript" src="{{ STATIC_PREFIX }}js/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_PREFIX }}js/bootstrap.bundle.min.js"></script>
+
+        {% block ajax_javascript %}
+            
+        {% endblock ajax_javascript %}
+    </body>
+</html>

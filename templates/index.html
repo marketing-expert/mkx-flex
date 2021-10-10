@@ -1,0 +1,48 @@
+{% extends '_base.html' %}
+
+{% block main_content %}
+    <div class="container d-flex flex-column">
+        <div class="row align-items-center justify-content-center no-gutters min-vh-100">
+            <div class="col-xl-8 col-lg-8 col-md-8 py-8 py-xl-0">
+
+                <img class="img-fluid py-2 mb-3" height="50" src="{{ STATIC_PREFIX }}img/logo.png" alt="{{ page_title }}">
+
+                {% if messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <strong>{{ message }}</strong>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="card shadow">
+                    <div class="card-body p-6">
+                        {% block register_body %}
+                            {% include "visitors/form.html" %}
+                        {% endblock register_body %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block ajax_javascript %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button").prop("disabled", true);
+
+            // When the value of the text area changes...
+            $("#id_hour_end_visit").focusout("input", function() {
+                // If there's at least one character...
+                if ($(this).val().length > 0) {
+                    // Enable the button.
+                    $("button").prop("disabled", false);
+                } else {
+                    // Else, disable the button.
+                    $("button").prop("disabled", true);
+                }
+            });
+        });
+    </script>           
+{% endblock ajax_javascript %}
