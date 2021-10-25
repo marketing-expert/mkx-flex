@@ -43,3 +43,9 @@ class Visitor(models.Model):
         indexes = [
             models.Index(fields=['id', 'uuid'], name='id_index_visitors'),
         ]
+
+    def __str(self):
+        return f"{self.get_gender_display()} {self.name}"
+
+    def get_fullname(self):
+        return f"{self.get_gender_display()} {self.name}"
