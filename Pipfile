@@ -11,6 +11,7 @@ mysqlclient = "*"
 django-crispy-forms = "*"
 django-compressor = "*"
 django-widget-tweaks = "*"
+whitenoise = "*"
 
 [dev-packages]
 flake8 = "*"
