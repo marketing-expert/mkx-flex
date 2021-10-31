@@ -1,12 +1,8 @@
 {% extends '_base.html' %}
 
 {% block main_content %}
-    <p>
-        <a class="btn btn-success btn-sm my-2 mb-lg-0 font-weight-bold" href="/">
-            <i class="fa fa-chevron-left mr-2"></i>
-            retour
-        </a>
-    </p>
+    
+    {% include "visitors/_breadcrumb.html" %}
 
     <ul class="list-group list-group-flush">
         {% for object in object_visitor_list %}
