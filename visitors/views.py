@@ -3,6 +3,7 @@
 from django.views import generic
 from django.contrib.messages import views
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 from visitors import models, mixins
@@ -10,6 +11,7 @@ from visitors import models, mixins
 
 @method_decorator(xframe_options_exempt, name='dispatch')
 class VisitorCreateView(
+    LoginRequiredMixin,
     views.SuccessMessageMixin,
     mixins.VisitorEditMixin, generic.CreateView
 ):
@@ -22,7 +24,7 @@ visitor_create_view = VisitorCreateView.as_view(
 )
 
 
-class VisitorListView(generic.ListView):
+class VisitorListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 3
     model = models.Visitor
     context_object_name = "object_visitor_list"
