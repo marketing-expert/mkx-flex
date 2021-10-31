@@ -1,0 +1,34 @@
+<!-- templates/login.html -->
+
+{% extends '_base.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+    <form class="form-row needs-validation" action="" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+            <p {% if forloop.last %} class="mb-0" {% endif %}>
+                {{ error }}
+            </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-group col-12">
+            {{ form.username|add_label_class:"form-label" }}
+            {% render_field form.username|add_error_class:"is-invalid" class+="form-control shadow-none" placeholder=form.username.label %}
+            <small>{{ form.username.help_text }}</small>
+        </div>
+
+        <div class="form-group col-12">
+            {{ form.password|add_label_class:"form-label" }}
+            {% render_field form.password|add_error_class:"is-invalid" class+="form-control shadow-none" placeholder=form.password.label %}
+            <small>{{ form.password.help_text }}</small>
+        </div>
+        
+        <button type="submit" class="btn btn-danger w-100 text-uppercase my-3">connexion</button>
+    </form>
+{% endblock main_content %}
