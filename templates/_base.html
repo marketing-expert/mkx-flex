@@ -29,7 +29,7 @@
                                 <div class="mb-2 text-center">
                                     <img class="img-fluid mb-3" src="{{ STATIC_PREFIX }}img/logo.png" alt="{{ page_title }}">
 
-                                    <h3 class="h3 mb-4 font-weight-bold text-capitalize">Flex Visitor</h3>
+                                    <h3 class="h3 mb-4 font-weight-bold text-capitalize">{{ page_title|capfirst }}</h3>
                                 </div>
 
                                 {% block main_content %}

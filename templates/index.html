@@ -3,18 +3,25 @@
 {% block main_content %}
     {% url 'visitors:add_visitor' as add_visitor_url %}
     {% url 'visitors:list_visitor' as list_visitor_url %}
+    {% url 'logout' as logout_url %}
 
     <div class="d-lg-flex justify-content-between align-items-center mb-2">
         <div>
-            <a class="btn btn-md btn-success mb-3 mb-lg-0 shadow-sm" href="{{ add_visitor_url }}">
-                Enregistrer le visiteur
+            <a class="btn btn-md btn-success mb-3 mb-lg-0 shadow-sm text-uppercase" href="{{ add_visitor_url }}">
+                enregister
                 <i class="fa fa-edit ml-2"></i>
             </a>
         </div>
 
         <div>
-            <a class="btn btn-md btn-primary mb-3 mb-lg-0 shadow-sm" href="{{ list_visitor_url }}">
-                Liste des visiteurs <i class="fa fa-users ml-2"></i>
+            <a class="btn btn-md btn-primary mb-3 mb-lg-0 shadow-sm text-uppercase" href="{{ list_visitor_url }}">
+                liste <i class="fa fa-users ml-2"></i>
+            </a>
+        </div>
+
+        <div>
+            <a class="btn btn-md btn-danger mb-3 mb-lg-0 shadow-sm text-uppercase" href="{{ logout_url }}">
+                déconnexion <i class="fa fa-sign-out-alt ml-2"></i>
             </a>
         </div>
     </div>
