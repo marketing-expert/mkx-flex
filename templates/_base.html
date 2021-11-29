@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        {% load static %}{% get_static_prefix as STATIC_PREFIX %}
+        {% load static compress %}
+        {% get_static_prefix as STATIC_PREFIX %}
+        
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css">
+        {% compress css %}
+            <link type="text/css" rel="stylesheet" href="{{ STATIC_PREFIX }}css/theme.min.css">
+        {% endcompress %}
 
-        <title>{% if page_title %}{{ page_title|capfirst }} &smid;{% endif %} Flex Marketing Expert</title>
+        <title>
+            {% if page_title %}{{ page_title|capfirst }} &smid;{% endif %} Marketing Expert
+        </title>
     </head>
 
     <body>
-        <main>
-            <div class="container d-flex flex-column">
-                <div class="row align-items-center justify-content-center no-gutters min-vh-100">
-                    <div class="col-xl-6 col-lg-7 col-md-7 py-5 py-xl-0">
-                        {% if messages %}
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {% for message in messages %}
-                                    <strong>{{ message }}</strong>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+        <main class="container d-flex flex-column">
+            <div class="row align-items-center justify-content-center no-gutters min-vh-100">
 
-                        <div class="card shadow">
-                            <div class="card-body p-5">
-                                <div class="mb-2 text-center">
-                                    <img class="img-fluid mb-3" src="{{ STATIC_PREFIX }}img/logo.png" alt="{{ page_title }}">
-
-                                    <h3 class="h3 mb-4 font-weight-bold text-capitalize">{{ page_title|capfirst }}</h3>
-                                </div>
-
-                                {% block main_content %}
-                                {% endblock main_content %}
-                            </div>
+                <div class="col-xl-8 col-lg-7 col-md-10 py-5 py-xl-0">
+                    {% if messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {% for message in messages %}
+                            <strong>{{ message }}</strong>
+                            {% endfor %}
                         </div>
+                    {% endif %}
 
-                        <p class="font-weight-normal text-center mt-5"> Flex Visit &smid; Build V.0.0.1</p>
-                    </div>
+                    <img width="180" class="img-fluid mb-4" src="{{ STATIC_PREFIX }}img/logo.png" alt="{{ page_title }}">
+
+                    {% block main_content %}
+                    {% endblock main_content %}
+
+                    <p class="font-weight-bold text-center mt-5">
+                        &copy; {% now 'Y' %} &smid; build by Marketing Expert
+                    </p>
                 </div>
             </div>
 		</main>
 
-        <script type="text/javascript" src="{{ STATIC_PREFIX }}js/jquery.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_PREFIX }}js/bootstrap.bundle.min.js"></script>
+        {% compress js %}
+            <script type="text/javascript" src="{{ STATIC_PREFIX }}js/jquery.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_PREFIX }}js/bootstrap.bundle.min.js"></script>
+        {% endcompress %}
 
         {% block ajax_javascript %}
 

@@ -1,8 +1,9 @@
 {% extends '_base.html' %}
 
 {% block main_content %}
-    {% url 'visitors:add_visitor' as add_visitor_url %}
-    {% url 'visitors:list_visitor' as list_visitor_url %}
+    {% url "dashboard" as dashboard_url %}
+    {% url 'flex:add_visitor' as add_visitor_url %}
+    {% url 'flex:list_visitor' as list_visitor_url %}
     {% url 'logout' as logout_url %}
 
     <div class="d-lg-flex justify-content-between align-items-center mb-2">
