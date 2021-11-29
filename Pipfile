@@ -12,6 +12,8 @@ django-crispy-forms = "*"
 django-compressor = "*"
 django-widget-tweaks = "*"
 whitenoise = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
 
 [dev-packages]
 flake8 = "*"
