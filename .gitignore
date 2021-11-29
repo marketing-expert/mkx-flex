@@ -71,3 +71,4 @@ media/
 .idea/
 tests/*
 */migrations/*
+staticfiles
