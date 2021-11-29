@@ -72,3 +72,4 @@ media/
 tests/*
 */migrations/*
 staticfiles
+__backups__/*.json
