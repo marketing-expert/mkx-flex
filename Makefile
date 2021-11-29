@@ -47,8 +47,8 @@ collectstatic: ## Run collectstatic
 	$(MANAGE) collectstatic --no-input
 
 dumpdata: ## dump data 
-	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json flex.visitor > _backups_/visitors.json
-	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json sites.site > _backups_/sites.json
+	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json max.souscriber > _backups_/max_data.json
+	$(MANAGE) dumpdata --indent=4 --natural-foreign --natural-primary -e contenttypes --format=json flex.visitor > _backups_/flex_data.json
 
 loaddata: ## load data 
 	$(MANAGE) loaddata __backups__/*.json
