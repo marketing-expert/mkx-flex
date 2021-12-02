@@ -18,12 +18,15 @@ admin.site.index_title = f"WELCOME TO {admin.site.site_header}"
 urlpatterns = [
     path(route='', view=generic.TemplateView.as_view(
         template_name="board.html",
-        extra_context={"page_title": "dashboard"}
+        extra_context={"page_title": "App Manager"}
     ), name='dashboard'),
 
     path(route='login/', view=views.LoginView.as_view(
         template_name="login.html",
-        extra_context={"page_title": "connexion"}
+        extra_context={
+            "page_title": "connexion",
+            "app_name": "account"
+        }
     ), name='login'),
     path(route='deconnexion/', view=views.LogoutView.as_view(), name='logout'),
 

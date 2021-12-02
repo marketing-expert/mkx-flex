@@ -25,7 +25,7 @@ DEBUG = str(os.getenv("DEBUG", "True"))
 TEMPLATE_DEBUG = DEBUG
 
 APPEND_SLASH = True
-ADMIN_URL = 'xx-flex/'
+ADMIN_URL = 'zz-fmc/'
 DEFAULT_CHARSET = 'UTF-8'
 SITE_DESCRIPTION = "Flex Register"
 DEFAULT_CONTENT_TYPE = 'text/html'
@@ -51,7 +51,11 @@ PACKAGES_APSS = [
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
+    
     'widget_tweaks',
+    'django_filters',
+    'phonenumber_field',
+    'phonenumbers',
     'compressor',
 ]
 
@@ -225,3 +229,8 @@ IGNORABLE_404_URLS = [
     re.compile(r'^/favicon\.ico$'),
     re.compile(r'^/robots\.txt$'),
 ]
+
+# phonenumber config
+
+PHONENUMBER_DEFAULT_REGION = "CI"
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"

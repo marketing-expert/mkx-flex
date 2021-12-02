@@ -6,9 +6,7 @@ from core.settings import *
 DEBUG = TEMPLATE_DEBUG = False
 
 # https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [
-    'flex.markting-expert.net',
-]
+ALLOWED_HOSTS = ['app.markting-expert.net']
 
 # APPLICATION DEFINITION
 
