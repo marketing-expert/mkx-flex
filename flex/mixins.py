@@ -13,7 +13,7 @@ class VisitorEditMixin(object):
     form_class = forms.AddVisitorForm
 
     def get_success_url(self):
-        return reverse("visitors:add_visitor")
+        return reverse("flex:add_visitor")
 
     def form_valid(self, form, *args, **kwargs):
         post = form.save(commit=False)

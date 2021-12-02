@@ -9,36 +9,45 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from flex import models, mixins
 
 
-class VisitorDashboard(LoginRequiredMixin, generic.TemplateView):
-    template_name = "index.html"
-    extra_context= {"page_title": "dashboard"}
+class FLexDashboard(LoginRequiredMixin, generic.TemplateView):
+    template_name = "flex/flex_dashboard.html"
+    extra_context= {
+        "app_name": "flex",
+        "page_title": "dashboard"
+    }
 
 
-visitor_dashboard = VisitorDashboard.as_view()
+flex_dashboard = FLexDashboard.as_view()
 
 
 @method_decorator(xframe_options_exempt, name='dispatch')
-class VisitorCreateView(
+class FlexVisitorCreateView(
     LoginRequiredMixin,
     views.SuccessMessageMixin,
     mixins.VisitorEditMixin, generic.CreateView
 ):
     success_message = "Visitor successfully added !"
-    template_name = "flex/add_visitor.html"
+    template_name = "flex/flex_add_visitor.html"
 
 
-visitor_create_view = VisitorCreateView.as_view(
-    extra_context={"page_title": "enregistrer le visiteur"}
+flex_create_visitor_view = FlexVisitorCreateView.as_view(
+    extra_context={
+        "app_name": "flex",
+        "page_title": "enregistrer le visiteur"
+    }
 )
 
 
-class VisitorListView(LoginRequiredMixin, generic.ListView):
+class FlexVisitorListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 3
     model = models.Visitor
     context_object_name = "object_visitor_list"
-    template_name = "flex/list_visitor.html"
+    template_name = "flex/flex_list_visitor.html"
 
 
-visitor_list_view = VisitorListView.as_view(
-    extra_context={"page_title": "liste des visiteurs"}
+flex_list_visitor_view = FlexVisitorListView.as_view(
+    extra_context={
+        "app_name": "flex",
+        "page_title": "liste des visiteurs"
+    }
 )
