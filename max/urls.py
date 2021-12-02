@@ -8,7 +8,10 @@ from max import views
 
 app_name = 'max'
 urlpatterns = [
-    path(route="", view=views.soucriber_list, name="list_souscriber"),
-    path(route="d/<slug>/", view=views.souscriber_detail, name="detail_soucriber"),
-    path(route="add/", view=views.suscriber_create, name="create_souscriber"),
+    path(route="", view=views.max_dashboard, name="home"),
+    path(route="list/souscribers/", view=views.max_soucriber_list, name="max_list_path"),
+    path(route="add/souscriber/", view=views.max_suscriber_create, name="max_create_path"),
+    path(route="detail/<pk>/", view=views.max_souscriber_detail, name="max_detail_path"),
+    path(route="update/<pk>/", view=views.max_suscriber_update, name="max_update_path"),
+    path(route='search/', view=views.search_view, name="search"),
 ]

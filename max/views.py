@@ -1,35 +1,100 @@
 # max.views.py
 
 from django.views import generic
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.decorators.clickjacking import xframe_options_exempt
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from max import models
+from max import models, mixins
 
-@method_decorator(xframe_options_exempt, name='dispatch')
-class SouscriberCreate(generic.CreateView):
+
+class MaxDashboard(generic.TemplateView):
+    template_name = "max/max_dashboard.html"
+    extra_context= {
+        "app_name": "max",
+        "page_title": "dashboard"
+    }
+
+
+max_dashboard = MaxDashboard.as_view()
+
+
+class MaxSouscriberCreate(
+    LoginRequiredMixin,
+    mixins.SouscriberEditMixin,
+    generic.CreateView
+):
     model = models.Souscriber
     paginate_by = 15
-    template_name = 'max/souscriber_create.html'
+    template_name = 'max/max_souscriber_create.html'
     
     def get_queryset(self):
         return super().get_queryset()
     
 
-suscriber_create = SouscriberCreate.as_view()
+max_suscriber_create = MaxSouscriberCreate.as_view(
+    extra_context={
+        "app_name": "max",
+        "page_title": "ajouter un client"
+    }
+)
 
 
-class SouscriberList(generic.ListView):
+class MaxSoucriberUpdate(
+    LoginRequiredMixin,
+    mixins.SouscriberEditMixin,
+    generic.UpdateView
+):
     model = models.Souscriber
-    template_name = 'max/soucriber_list.html'
+    template_name = 'max/max_souscriber_create.html'
 
 
-soucriber_list = SouscriberList.as_view()
+max_suscriber_update = MaxSoucriberUpdate.as_view(
+    extra_context={
+        "app_name": "max",
+        "page_title": "mettre à jour"
+    }
+)
 
 
-class SouscriberDetail(generic.DetailView):
+class MaxSouscriberList(mixins.MaxFilterMixin, generic.ListView):
+    paginate_by = 15
     model = models.Souscriber
-    template_name = 'max/souscriber_detail.html'
+    context_object_name = 'object_souscriber_list'
+    template_name = 'max/max_souscriber_list.html'
 
 
-souscriber_detail = SouscriberDetail.as_view()
+max_soucriber_list = MaxSouscriberList.as_view(
+    extra_context={
+        "app_name": "max",
+        "page_title": "vérifier votre inscription"
+    }
+)
+
+
+class MaxSouscriberDetail(generic.DetailView):
+    model = models.Souscriber
+    template_name = 'max/max_souscriber_detail.html'
+
+
+max_souscriber_detail = MaxSouscriberDetail.as_view(
+    extra_context={
+        "app_name": "max"
+    }
+)
+
+
+class SearchView(mixins.MaxFilterMixin, generic.ListView):
+    paginate_by = 15
+    model = models.Souscriber
+    context_object_name = 'object_souscriber_list'
+    template_name = 'max/max_souscriber_search.html'
+    success_url = reverse_lazy('max:max_list_path')
+
+
+search_view = SearchView.as_view(
+    extra_context={
+        "app_name": "max",
+        "page_title": "vérifier votre inscription"
+    }
+)

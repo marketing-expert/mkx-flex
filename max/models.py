@@ -2,29 +2,16 @@
 
 import uuid
 from django.db import models
+from django.urls import reverse
 from django.contrib import admin
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-import phonenumbers
 from flex.models import Visitor
 from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Pack(models.Model):
 
-    class PACK_TYPES(models.TextChoices):
-        FUN = "FUN", "FUN"
-        GOLD = "GOLD", "Gold"
-        SILVER = "SILVER", "Silver"
-
-    default_pack_choices = PACK_TYPES.FUN
-
-    pack = models.CharField(
-        verbose_name="pack",
-        max_length=10,
-        default=default_pack_choices,
-        choices=PACK_TYPES.choices
-    )
     price = models.PositiveIntegerField(
         verbose_name="prix du pack",
         default=5000,
@@ -74,11 +61,6 @@ class Souscriber(models.Model):
         verbose_name="nom & prénoms",
         max_length=100
     )
-    email = models.EmailField(
-        unique=True,
-        max_length=254,
-        verbose_name='adresse email'
-    )
     phone_one = PhoneNumberField(
         verbose_name="téléphone",
         unique=True
@@ -87,19 +69,44 @@ class Souscriber(models.Model):
         verbose_name='second téléphone (facultatif)',
         blank=True, null=True
     )
-    packs = models.ManyToManyField(
-        to=Pack,
-        verbose_name="packs",
-        related_name="packs"
-    )
     faculte = models.CharField(
         verbose_name="faculté",
         max_length=180,
-        help_text="faculté du client"
+        blank=True, null=True
     )
     amount = models.PositiveIntegerField(
-        verbose_name="montant versé",
-        default=5000
+        verbose_name="montant versé (Fr CFA)",
+        default=5000,
+        validators=[
+            MinValueValidator(5000),
+            MaxValueValidator(800000)
+        ],
+        null=True
+    )
+    number_kit = models.CharField(
+        verbose_name="numéro du kit",
+        max_length=6,
+        default='MKB001', null=True
+    )
+    is_pack_easy = models.BooleanField(
+        verbose_name="easy",
+        default=False
+    )
+    is_pack_gold = models.BooleanField(
+        verbose_name="gold",
+        default=False
+    )
+    is_pack_fun = models.BooleanField(
+        verbose_name="fun",
+        default=False
+    )
+    is_pack_phoenix = models.BooleanField(
+        verbose_name="phoenix",
+        default=False
+    )
+    is_pack_silver = models.BooleanField(
+        verbose_name="silver",
+        default=False
     )
     created_at = models.DateTimeField(
         verbose_name="date d'ajout",
@@ -125,26 +132,20 @@ class Souscriber(models.Model):
         return reverse(
             "souscriber_detail", kwargs={"pk": self.pk}
         )
+
+    def get_update_url(self):
+        return reverse(
+            "max:max_update_path", kwargs={"pk": self.pk}
+        )
     
     @admin.display(description="client name")
     def get_client_name(self):
         return f"{self.get_gender_display()} {self.name}"
     
-    def formatted_phone_one(self, country=None):
-        return phonenumbers.parse(self.phone_one, country)
-
-    def formatted_phone_two(self, country=None):
-        return phonenumbers.parse(self.phone_two, country)
-    
     @admin.display(description="téléphone client")
     def get_client_phone(self):
-        return self.formatted_phone_one()
-    
+        return self.phone_one
+
     @admin.display(description='montant versé')
     def get_client_amount(self):
         return self.amount
-    
-    @admin.display(description='packs choisis')
-    def get_client_packs(self):
-        packs = [pack.name for pack in self.packs.all()]
-        return packs
