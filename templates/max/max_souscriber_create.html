@@ -1,0 +1,136 @@
+{% extends '_base.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+    {% include "components/_breadcrumb.html" %}
+    
+    <div class="card p-5 rounded-0">
+        <form class="form-row needs-validation" method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <p class="{% if forloop.last %}mb-0{% endif %}">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-group col-12">
+                <div class="form-label">Choisir un/les pack(s)</div>
+                <div class="form-check form-check-inline">
+                    {{ form.is_pack_easy|add_label_class:"form-check-label font-weight-bolder" }}
+                    {% render_field form.is_pack_easy %} &smid;
+
+                    {{ form.is_pack_gold|add_label_class:"form-check-label font-weight-bolder ml-2" }}
+                    {% render_field form.is_pack_gold %} &smid;
+
+                    {{ form.is_pack_fun|add_label_class:"form-check-label font-weight-bolder ml-2" }}
+                    {% render_field form.is_pack_fun %} &smid;
+
+                    {{ form.is_pack_phoenix|add_label_class:"form-check-label font-weight-bolder ml-2" }}
+                    {% render_field form.is_pack_phoenix %} &smid;
+
+                    {{ form.is_pack_silver|add_label_class:"form-check-label font-weight-bolder ml-2" }}
+                    {% render_field form.is_pack_silver %}
+                </div>
+            </div>
+
+            <div class="form-group col-6">
+                {{ form.number_kit|add_label_class:"form-label" }}
+                {% render_field form.number_kit|add_error_class:"is-invalid" placeholder="MKB001" %}
+                <small>{{ form.number_kit.errors }}</small>
+            </div>
+
+            <div class="form-group col-6">
+                {{ form.amount|add_label_class:"form-label" }}
+                {% render_field form.amount|add_error_class:"is-invalid" placeholder=form.amount.label %}
+                <small>{{ form.amount.errors }}</small>
+            </div>
+
+            <div class="form-group col-12">
+                {{ form.name|add_label_class:"form-label" }}
+                <div class="input-group">
+                    {% render_field form.gender|add_error_class:"is-invalid" class+="custom-select w-25" %}
+                    {% render_field form.name|add_error_class:"is-invalid" class+="w-75" placeholder=form.name.label %}
+                    <small>{{ form.name.errors }}</small>
+                </div>
+            </div>
+
+            <div class="form-group col-12">
+                {{ form.email|add_label_class:"form-label" }}
+                {% render_field form.email|add_error_class:"is-invalid" placeholder=form.email.label %}
+                <small>{{ form.email.help_text }}</small>
+            </div>
+
+            <div class="form-group col-6">
+                {{ form.phone_one|add_label_class:"form-label" }}
+                {% render_field form.phone_one|add_error_class:"is-invalid" placeholder=form.phone_one.label %}
+                <small>{{ form.phone_one.errors }}</small>
+            </div>
+
+            <div class="form-group col-6">
+                {{ form.phone_two|add_label_class:"form-label" }}
+                {% render_field form.phone_two|add_error_class:"is-invalid" placeholder=form.phone_two.label %}
+                <small>{{ form.phone_two.errors }}</small>
+            </div>
+
+            <div class="form-group col-12">
+                {{ form.faculte|add_label_class:"form-label" }}
+                {% render_field form.faculte|add_error_class:"is-invalid" placeholder=form.faculte.label %}
+                <small>{{ form.faculte.errors }}</small>
+            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-block btn-primary mb-3 mb-lg-0 shadow-none">
+                    Valider
+                </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock main_content %}
+
+{% block ajax_javascript %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button").prop("disabled", true);
+
+            // When the value of the text area changes...
+            $("#id_amount").focusout("input", function() {
+                // If there's at least one character...
+                if ($(this).val().length < 4999) {
+                    // Enable the button.
+                    $("button").prop("disabled", false);
+                } else {
+                    // Else, disable the button.
+                    $("button").prop("disabled", true);
+                }
+            });
+
+            $("#id_number_kit").focusout("input", function() {
+                // If there's at least one character...
+                if ($(this).val().length < 4999) {
+                    // Enable the button.
+                    $("button").prop("disabled", false);
+                } else {
+                    // Else, disable the button.
+                    $("button").prop("disabled", true);
+                }
+            });
+
+            $("#id_name").focusout("input", function() {
+                // If there's at least one character...
+                if ($(this).val().length > 0) {
+                    // Enable the button.
+                    $("button").prop("disabled", false);
+                } else {
+                    // Else, disable the button.
+                    $("button").prop("disabled", true);
+                }
+            });
+        });
+    </script>
+{% endblock ajax_javascript %}

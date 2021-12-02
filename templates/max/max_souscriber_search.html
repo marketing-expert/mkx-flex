@@ -1,0 +1,100 @@
+{% extends '_base.html' %}
+
+{% load widget_tweaks %}
+
+{% block main_content %}
+    
+    {% include "components/_breadcrumb.html" %}
+
+    <div class="card p-5 rounded-0">
+        <form class="form-row needs-validation" method="get">
+            
+            <div class="form-group col-6">
+
+                {{ filter.form.number_kit.label_tag }}
+
+                {% render_field filter.form.number_kit|add_error_class:"is-invalid" class="form-control shadow-none" placeholder="Entrer le numéro de votre kit" %}
+            </div>
+
+            <div class="form-group col-6">
+
+                {{ filter.form.phone_one.label_tag }}
+
+                {% render_field filter.form.phone_one|add_error_class:"is-invalid" class="form-control shadow-none" placeholder="Entrer le numéro de votre kit" %}
+            </div>
+
+            <button type="submit" class="btn btn-md btn-block btn-danger text-uppercase font-weight-bold">
+                rechercher
+                <i class="fa fa-search ml-2"></i>
+            </button>
+        </form>
+
+        <hr class="py-3">
+
+        <ul class="list-group list-group-flush">
+            {% for object in filter.qs %}
+                <li class="list-group-item px-0">
+                    <h5 class="text-primary-hover">
+                        {{ object.get_fullname|capfirst|safe }}
+                    </h5>
+                    <p class="mr-2 font-size-xs">
+                        <span class="mr-2 font-size-xs">
+                            <i class="fa fa-user mr-1"></i>
+                            {{ object.get_client_name|safe }}
+                        </span>
+                    </p>
+                    <p class="mr-2 font-size-xs">
+                        <span class="mr-2 font-size-xs">
+                            <i class="fa fa-award mr-1"></i>
+                            <span>Numéro kit: </span>
+                            {{ object.number_kit|safe }}
+                        </span>
+                    </p>
+                    <p class="mr-2 font-size-xs">
+                        <span class="mr-2 font-size-xs">
+                            <i class="fa fa-tags mr-1"></i>
+                            <span>Pack soucrit : </span>
+                            {% if object.is_pack_easy %}
+                                Easy &smid;
+                            {% endif %}
+                            {% if object.is_pack_gold %}
+                                Gold
+                            {% endif %}
+                            {% if object.is_pack_fun %}
+                                &smid; Fun
+                            {% endif %}
+                            {% if object.is_pack_phoenix %}
+                                &smid; Phoenix
+                            {% endif %}
+                            {% if object.is_pack_silver %}
+                                &smid; Silver
+                            {% endif %}
+                        </span>
+                    </p>
+                    <p class="mr-2 font-size-xs">
+                        <span class="mr-2 font-size-xs">
+                            <i class="fa fa-calendar mr-1"></i>
+                            <span>Inscrit(e) le: </span>
+                            {{ object.created_at|date }}
+                        </span>
+                    </p>
+
+                    {% if request.user.is_authenticated %}
+                        <a class="btn btn-sm btn-danger text-uppercase font-weight-bold" href="{{ object.get_update_url }}">
+                        mettre à jour <i class="fa fa-edit"></i>
+                        </a>
+                    {% endif %} 
+                </li>
+            {% empty %}
+                <p class="font-weight-bold text-center">
+                    Aucun souscripteur pour le moment.
+                </p>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <p class="font-weight-bold text-center mt-4">
+        Pour toutes reclamations veuillez nous laissez un message ici
+        <a href="#">support@marketing-expert.net</a>
+    </p>
+{% endblock main_content %}
