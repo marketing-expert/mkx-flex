@@ -1,7 +1,15 @@
 
-<p>
-    <a class="btn btn-success btn-sm my-2 mb-lg-0 font-weight-bold" href="{{  request.META.HTTP_REFERER }}">
+<p class="d-flex justify-content-center justify-content-between">
+    <a class="btn btn-success btn-sm my-2 mb-lg-0 font-weight-bold " href="{{ request.META.HTTP_REFERER }}">
         <i class="fa fa-chevron-left mr-2"></i>
         retour
     </a>
+
+    {% if request.user.is_authenticated and request.resolver_match.url_name == 'search' %}
+        {% url "max:max_create_path" as max_create_url %}
+        <a class="btn btn-danger btn-sm my-2 mb-lg-0 font-weight-bold text-uppercase" href="{{  max_create_url }}">
+            ajouter un client
+            <i class="fa fa-edit ml-2"></i>
+        </a>
+    {% endif %}
 </p>
