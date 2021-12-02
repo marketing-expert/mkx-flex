@@ -32,7 +32,7 @@
         <hr class="py-3">
 
         <ul class="list-group list-group-flush">
-            {% for object in filter.qs %}
+            {% for object in filter.qs|slice:'0:1' %}
                 <li class="list-group-item px-0">
                     <h5 class="text-primary-hover">
                         {{ object.get_fullname|capfirst|safe }}
