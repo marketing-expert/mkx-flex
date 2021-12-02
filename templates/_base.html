@@ -13,24 +13,47 @@
         {% endcompress %}
 
         <title>
-            {% if page_title %}{{ page_title|capfirst }} &smid;{% endif %} Marketing Expert
+            {% if page_title %}
+                {{ page_title|capfirst }} &smid;
+                {% if app_name %}  
+                  {{ app_name|upper }} &smid;
+                {% endif %}
+            {% endif %}
+                Marketing Expert
         </title>
     </head>
 
     <body>
         <main class="container d-flex flex-column">
-            <div class="row align-items-center justify-content-center no-gutters min-vh-100">
+            <div class="row align-items-center justify-content-center no-gutters min-vh-100 mb-2">
 
-                <div class="col-xl-8 col-lg-7 col-md-10 py-5 py-xl-0">
+                <div class="col-xl-7 col-lg-7 py-5 py-xl-0">
                     {% if messages %}
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {% for message in messages %}
-                            <strong>{{ message }}</strong>
+                                <strong>{{ message }}</strong>
                             {% endfor %}
                         </div>
                     {% endif %}
 
-                    <img width="180" class="img-fluid mb-4" src="{{ STATIC_PREFIX }}img/logo.png" alt="{{ page_title }}">
+                    <div class="d-lg-flex justify-content-between align-items-center align-middle mb-3">
+                        <a href="/">
+                            <img width="180" class="img-fluid" src="{{ STATIC_PREFIX }}img/logo.png" alt="{{ page_title }}">
+                        </a>
+
+                        {% if request.user.is_authenticated %}
+
+                            {% if app_name %}
+                                <span class="text-uppercase font-weight-bold">app {{ app_name }}
+                                </span>
+                            {% endif %}
+
+                            {% url 'logout' as logout_url %}
+                            <a href="{{ logout_url }}" class="btn btn-sm btn-danger font-weight-bold text-white text-uppercase p-1">
+                                se deconnecter <i class="fa fa-sign-out-alt ml-2"></i>
+                            </a>
+                        {% endif %}
+                    </div>
 
                     {% block main_content %}
                     {% endblock main_content %}

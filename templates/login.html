@@ -4,13 +4,13 @@
 {% load widget_tweaks %}
 
 {% block main_content %}
-    <form class="form-row needs-validation" action="" method="post" novalidate>
+    <form class="form-row card p-5 needs-validation rounded-0" action="" method="post" novalidate>
         {% csrf_token %}
 
         {% if form.non_field_errors %}
             <div class="alert alert-danger" role="alert">
                 {% for error in form.non_field_errors %}
-                <p {% if forloop.last %} class="mb-0" {% endif %}>
+                <p class="{% if forloop.last %}mb-0{% endif %}">
                     {{ error }}
                 </p>
                 {% endfor %}
