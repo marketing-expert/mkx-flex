@@ -14,7 +14,7 @@ django-crispy-forms==1.13.0
 django-filter==21.1
 django-phonenumber-field==6.0.0
 django-widget-tweaks==1.4.9
-django==3.2.9
+django==3.2.13
 gunicorn==20.1.0
 mysqlclient==2.1.0
 phonenumbers==8.12.38
